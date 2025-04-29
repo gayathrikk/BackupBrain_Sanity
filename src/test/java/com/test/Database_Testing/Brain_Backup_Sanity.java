@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class BrainBackupSanityTest {
+public class Brain_Backup_Sanity {
 
     String user = "hbp";
     String password = "Health#123";
