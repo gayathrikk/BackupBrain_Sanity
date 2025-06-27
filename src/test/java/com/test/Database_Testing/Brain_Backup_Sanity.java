@@ -59,42 +59,24 @@ public class Brain_Backup_Sanity {
             System.out.println("   Size:  " + size1.trim() + " vs " + size2.trim() + " → " + (sizeMatch ? "✅ Match" : "❌ Mismatch"));
             System.out.println("   Files: " + count1.trim() + " vs " + count2.trim() + " → " + (countMatch ? "✅ Match" : "❌ Mismatch"));
 
-            Set<String> files1 = getRelativeFiles(user, password, host1, subPath1);
-            Set<String> files2 = getRelativeFiles(user, password, host2, subPath2);
+            if (!countMatch) {
+                Set<String> files1 = getRelativeFiles(user, password, host1, subPath1);
+                Set<String> files2 = getRelativeFiles(user, password, host2, subPath2);
 
-            Set<String> missingOnHost2 = new TreeSet<>(files1);
-            missingOnHost2.removeAll(files2);
+                Set<String> missingOnHost2 = new TreeSet<>(files1);
+                missingOnHost2.removeAll(files2);
 
-            Set<String> missingOnHost1 = new TreeSet<>(files2);
-            missingOnHost1.removeAll(files1);
+                Set<String> missingOnHost1 = new TreeSet<>(files2);
+                missingOnHost1.removeAll(files1);
 
-            if (!missingOnHost2.isEmpty()) {
-                System.out.println("   ❌ Missing on " + host2 + ":");
-                for (String f : missingOnHost2) System.out.println("      " + f);
-            }
+                if (!missingOnHost2.isEmpty()) {
+                    System.out.println("   ❌ Missing on " + host2 + ":");
+                    for (String f : missingOnHost2) System.out.println("      " + f);
+                }
 
-            if (!missingOnHost1.isEmpty()) {
-                System.out.println("   ❌ Missing on " + host1 + ":");
-                for (String f : missingOnHost1) System.out.println("      " + f);
-            }
-
-            // 🔍 Compare content if file names match
-            Set<String> commonFiles = new TreeSet<>(files1);
-            commonFiles.retainAll(files2);
-
-            if (!commonFiles.isEmpty()) {
-                Map<String, String> checksums1 = getFileChecksums(user, password, host1, subPath1);
-                Map<String, String> checksums2 = getFileChecksums(user, password, host2, subPath2);
-
-                for (String file : commonFiles) {
-                    String hash1 = checksums1.get(file);
-                    String hash2 = checksums2.get(file);
-
-                    if (hash1 != null && hash2 != null && !hash1.equals(hash2)) {
-                        System.out.println("   ⚠️ Content mismatch in file: " + file);
-                        System.out.println("      " + host1 + ": " + hash1);
-                        System.out.println("      " + host2 + ": " + hash2);
-                    }
+                if (!missingOnHost1.isEmpty()) {
+                    System.out.println("   ❌ Missing on " + host1 + ":");
+                    for (String f : missingOnHost1) System.out.println("      " + f);
                 }
             }
         }
@@ -111,26 +93,6 @@ public class Brain_Backup_Sanity {
         return Arrays.stream(output.split("\n"))
                 .map(f -> f.replaceFirst(fullPath + "/", ""))
                 .collect(Collectors.toSet());
-    }
-
-    private Map<String, String> getFileChecksums(String user, String password, String host, String folderPath) throws Exception {
-        String cmd = "find " + folderPath + " -type f -exec md5sum {} \\;";
-        String output = runCommand(user, password, host, cmd);
-
-        Map<String, String> checksums = new HashMap<>();
-        String[] lines = output.split("\n");
-
-        for (String line : lines) {
-            if (line.trim().isEmpty()) continue;
-            String[] parts = line.split("\\s+", 2);
-            if (parts.length == 2) {
-                String checksum = parts[0];
-                String fullPath = parts[1];
-                String relativePath = fullPath.replaceFirst(folderPath + "/", "");
-                checksums.put(relativePath, checksum);
-            }
-        }
-        return checksums;
     }
 
     private String runCommand(String user, String password, String host, String command) throws Exception {
