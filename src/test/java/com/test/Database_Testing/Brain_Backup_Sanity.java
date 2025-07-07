@@ -24,8 +24,8 @@ public class Brain_Backup_Sanity {
 
         System.out.println("\n📦 Comparing TOTAL storage and file count for brain: " + brainNumber);
 
-        String totalSize1 = runCommand(user, password, host1, "du -sh " + path1 + " | cut -f1");
-        String totalSize2 = runCommand(user, password, host2, "du -sh " + path2 + " | cut -f1");
+        String totalSize1 = runCommand(user, password, host1, "du -sh --apparent-size " + path1 + " | cut -f1");
+        String totalSize2 = runCommand(user, password, host2, "du -sh --apparent-size " + path2 + " | cut -f1");
 
         String totalFiles1 = runCommand(user, password, host1, "find " + path1 + " -type f | wc -l");
         String totalFiles2 = runCommand(user, password, host2, "find " + path2 + " -type f | wc -l");
@@ -46,8 +46,8 @@ public class Brain_Backup_Sanity {
             String subPath1 = path1 + "/" + folder;
             String subPath2 = path2 + "/" + folder;
 
-            String size1 = runCommand(user, password, host1, "du -sh " + subPath1 + " | cut -f1");
-            String size2 = runCommand(user, password, host2, "du -sh " + subPath2 + " | cut -f1");
+            String size1 = runCommand(user, password, host1, "du -sh --apparent-size " + subPath1 + " | cut -f1");
+            String size2 = runCommand(user, password, host2, "du -sh --apparent-size " + subPath2 + " | cut -f1");
 
             String count1 = runCommand(user, password, host1, "find " + subPath1 + " -type f | wc -l");
             String count2 = runCommand(user, password, host2, "find " + subPath2 + " -type f | wc -l");
