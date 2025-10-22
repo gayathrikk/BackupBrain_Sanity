@@ -14,13 +14,13 @@ public class Brain_Backup_Sanity {
     String password = "Health#123";
 
     String host1 = "pp6.humanbrain.in";
-    String host2 = "ap7.humanbrain.in";
+    String host2 = "ap6.humanbrain.in";
 
     @Test
     @Parameters("brainNumber")
     public void verifyBrainBackupConsistency(String brainNumber) throws Exception {
         String path1 = "/mnt/remote/analytics/" + brainNumber;
-        String path2 = "/mnt/local/store/repos1/iitlab/humanbrain/analytics/" + brainNumber;
+        String path2 = "/mnt/remote/store/repos1/iitlab/humanbrain/analytics/" + brainNumber;
 
         System.out.println("\n📦 Comparing TOTAL storage and file count for brain: " + brainNumber);
 
@@ -115,3 +115,4 @@ public class Brain_Backup_Sanity {
         return result;
     }
 }
+
