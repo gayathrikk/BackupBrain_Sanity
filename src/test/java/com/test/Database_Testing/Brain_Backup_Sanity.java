@@ -14,7 +14,7 @@ public class Brain_Backup_Sanity {
     String password = "hbpsgbclab@123";
 
     String host1 = "pp6.humanbrain.in";
-    String host2 = "ap6.humanbrain.in";
+    String host2 = "ap7.humanbrain.in";
 
     @Test
     @Parameters("brainNumber")
@@ -115,6 +115,7 @@ public class Brain_Backup_Sanity {
         return result;
     }
 }
+
 
 
 
