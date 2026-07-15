@@ -19,7 +19,7 @@ public class Brain_Backup_Sanity {
     @Test
     @Parameters("brainNumber")
     public void verifyBrainBackupConsistency(String brainNumber) throws Exception {
-        String path1 = "/lustre/data/store10PB/repos1/iitlab/humanbrain/analytics/" + brainNumber;
+        String path1 = "/mnt/remote/analytics/" + brainNumber;
         String path2 = "/mnt/local/store/repos1/iitlab/humanbrain/analytics/" + brainNumber;
 
         System.out.println("\n📦 Comparing TOTAL storage and file count for brain: " + brainNumber);
