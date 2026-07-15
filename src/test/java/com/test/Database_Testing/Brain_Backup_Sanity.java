@@ -13,7 +13,7 @@ public class Brain_Backup_Sanity {
     String user = "hbp";
     String password = "hbpsgbclab@123";
 
-    String host1 = "pp2.humanbrain.in";
+    String host1 = "pp6.humanbrain.in";
     String host2 = "ap7.humanbrain.in";
 
     @Test
